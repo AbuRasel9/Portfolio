@@ -1,0 +1,29 @@
+name: rase_flutter_protfolio
+description: Premium Flutter Developer Portfolio - Abu Rasel
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  google_fonts: ^6.1.0
+  url_launcher: ^6.2.4
+  animate_do: ^3.3.4
+  cached_network_image: ^3.3.1
+  flutter_svg: ^2.0.9
+  font_awesome_flutter: ^10.7.0
+  visibility_detector: ^0.4.0+2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
