@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../models/app_theme.dart';
@@ -13,88 +14,57 @@ class SkillsSection extends StatelessWidget {
 
     final skillCards = [
       _SkillData(
-        category: 'Languages',
-        icon: FontAwesomeIcons.code,
-        gradient: const LinearGradient(colors: [AppColors.purple, AppColors.pink]),
-        skills: ['Dart', 'Python', 'Java'],
-        borderColor: AppColors.purple.withOpacity(0.2),
-        bgColors: [AppColors.purple.withOpacity(0.15), AppColors.bgCard],
-        skillColor: AppColors.purple,
+        category: 'Mobile Dev',
+        icon: Icons.phone_android_rounded,
+        gradient: const LinearGradient(colors: [Color(0xFF6366F1), Color(0xFFA855F7)]),
+        skills: ['Flutter', 'Dart', 'Android/iOS', 'App Store'],
+        skillColor: const Color(0xFF818CF8),
       ),
       _SkillData(
-        category: 'Framework',
-        icon: FontAwesomeIcons.bolt,
-        gradient: const LinearGradient(
-            colors: [AppColors.pink, Color(0xFFF43F5E)]),
-        skills: ['Flutter', 'Material Design', 'Cupertino'],
-        borderColor: AppColors.pink.withOpacity(0.2),
-        bgColors: [AppColors.pink.withOpacity(0.15), AppColors.bgCard],
-        skillColor: AppColors.pink,
-      ),
-      _SkillData(
-        category: 'State Mgmt',
-        icon: FontAwesomeIcons.cubesStacked,
-        gradient: const LinearGradient(
-            colors: [AppColors.blue, AppColors.cyan]),
+        category: 'State & Logic',
+        icon: FontAwesomeIcons.brain,
+        gradient: const LinearGradient(colors: [Color(0xFF3B82F6), Color(0xFF06B6D4)]),
         skills: ['Riverpod', 'BLoC', 'Provider', 'GetX'],
-        borderColor: AppColors.blue.withOpacity(0.2),
-        bgColors: [AppColors.blue.withOpacity(0.15), AppColors.bgCard],
-        skillColor: AppColors.blue,
+        skillColor: const Color(0xFF60A5FA),
       ),
       _SkillData(
-        category: 'Database',
-        icon: FontAwesomeIcons.database,
-        gradient: const LinearGradient(
-            colors: [AppColors.green, Color(0xFF10B981)]),
-        skills: ['Hive', 'Sqflite', 'SharedPreferences', 'ObjectBox'],
-        borderColor: AppColors.green.withOpacity(0.2),
-        bgColors: [AppColors.green.withOpacity(0.15), AppColors.bgCard],
-        skillColor: AppColors.green,
+        category: 'Backend & DB',
+        icon: FontAwesomeIcons.server,
+        gradient: const LinearGradient(colors: [Color(0xFF10B981), Color(0xFF3B82F6)]),
+        skills: ['Firebase', 'Supabase', 'Hive', 'PostgreSQL'],
+        skillColor: const Color(0xFF34D399),
       ),
       _SkillData(
-        category: 'Backend & API',
-        icon: FontAwesomeIcons.rocket,
-        gradient: const LinearGradient(
-            colors: [AppColors.orange, AppColors.red]),
-        skills: ['Firebase', 'REST API', 'Dio', 'GraphQL'],
-        borderColor: AppColors.orange.withOpacity(0.2),
-        bgColors: [AppColors.orange.withOpacity(0.15), AppColors.bgCard],
-        skillColor: AppColors.orange,
-      ),
-      _SkillData(
-        category: 'Design',
-        icon: FontAwesomeIcons.paintbrush,
-        gradient: const LinearGradient(
-            colors: [Color(0xFF8B5CF6), AppColors.purple]),
-        skills: ['Figma', 'Adobe XD', 'UI/UX', 'Animations'],
-        borderColor: const Color(0xFF8B5CF6).withOpacity(0.2),
-        bgColors: [const Color(0xFF8B5CF6).withOpacity(0.15), AppColors.bgCard],
-        skillColor: const Color(0xFF8B5CF6),
+        category: 'Tools & Design',
+        icon: FontAwesomeIcons.penNib,
+        gradient: const LinearGradient(colors: [Color(0xFFF43F5E), Color(0xFFFB923C)]),
+        skills: ['Figma', 'Git', 'CI/CD', 'Adobe XD'],
+        skillColor: const Color(0xFFFB7185),
       ),
     ];
 
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: padding, vertical: 80),
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: padding, vertical: 100),
       child: Column(
         children: [
           const SectionHeader(
             badge: '⚡ My Arsenal',
             title: 'Skills & Tools',
-            subtitle: 'Technologies I use to bring ideas to life',
+            subtitle: 'Crafting excellence with the modern tech stack',
           ),
-          const SizedBox(height: 60),
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: isMobile ? 1 : (AppSizes.isTablet(context) ? 2 : 3),
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 20,
-              childAspectRatio: isMobile ? 2.2 : 1.2,
-            ),
-            itemCount: skillCards.length,
-            itemBuilder: (ctx, i) => _SkillCard(data: skillCards[i]),
-          ),
+          const SizedBox(height: 80),
+          // Unique Layout: Use a custom wrap or grid that looks less "standard"
+          LayoutBuilder(builder: (context, constraints) {
+            return Wrap(
+              spacing: 24,
+              runSpacing: 24,
+              alignment: WrapAlignment.center,
+              children: skillCards.map((card) => SizedBox(
+                width: isMobile ? constraints.maxWidth : (constraints.maxWidth - 48) / 2,
+                child: _EnhancedSkillCard(data: card),
+              )).toList(),
+            );
+          }),
         ],
       ),
     );
@@ -106,8 +76,6 @@ class _SkillData {
   final IconData icon;
   final LinearGradient gradient;
   final List<String> skills;
-  final Color borderColor;
-  final List<Color> bgColors;
   final Color skillColor;
 
   const _SkillData({
@@ -115,79 +83,160 @@ class _SkillData {
     required this.icon,
     required this.gradient,
     required this.skills,
-    required this.borderColor,
-    required this.bgColors,
     required this.skillColor,
   });
 }
 
-class _SkillCard extends StatefulWidget {
+class _EnhancedSkillCard extends StatefulWidget {
   final _SkillData data;
-  const _SkillCard({required this.data});
+  const _EnhancedSkillCard({required this.data});
 
   @override
-  State<_SkillCard> createState() => _SkillCardState();
+  State<_EnhancedSkillCard> createState() => _EnhancedSkillCardState();
 }
 
-class _SkillCardState extends State<_SkillCard> {
-  bool _hovered = false;
+class _EnhancedSkillCardState extends State<_EnhancedSkillCard> {
+  bool _isHovered = false;
 
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-      onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        padding: const EdgeInsets.all(24),
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeOutCubic,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: widget.data.bgColors,
-          ),
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(32),
           border: Border.all(
-            color: _hovered
-                ? widget.data.borderColor.withOpacity(0.6)
-                : widget.data.borderColor,
+            color: _isHovered ? widget.data.skillColor.withOpacity(0.4) : AppColors.borderLight,
+            width: 1.5,
           ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: 48,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    gradient: widget.data.gradient,
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  child: Icon(widget.data.icon, color: Colors.white, size: 22),
-                ),
-                const SizedBox(width: 16),
-                Text(
-                  widget.data.category,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(32),
+          child: Stack(
+            children: [
+              // Glowing background effect
+              AnimatedPositioned(
+                duration: const Duration(milliseconds: 600),
+                top: _isHovered ? -50 : -100,
+                right: _isHovered ? -50 : -100,
+                child: ImageFiltered(
+                  imageFilter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 600),
+                    width: 200,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: widget.data.skillColor.withOpacity(_isHovered ? 0.15 : 0.05),
+                    ),
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: widget.data.skills
-                  .map((s) => TagChip(label: s, color: widget.data.skillColor))
-                  .toList(),
-            ),
-          ],
+              ),
+
+              Padding(
+                padding: const EdgeInsets.all(32),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            gradient: widget.data.gradient,
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                color: widget.data.skillColor.withOpacity(0.3),
+                                blurRadius: 15,
+                                offset: const Offset(0, 5),
+                              )
+                            ],
+                          ),
+                          child: Icon(widget.data.icon, color: Colors.white, size: 24),
+                        ),
+                        const SizedBox(width: 20),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.data.category,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Container(
+                                height: 2,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                  color: widget.data.skillColor,
+                                  borderRadius: BorderRadius.circular(2),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 32),
+                    Wrap(
+                      spacing: 12,
+                      runSpacing: 12,
+                      children: widget.data.skills.map((skill) {
+                        return _ModernSkillBadge(
+                          label: skill,
+                          color: widget.data.skillColor,
+                          isHovered: _isHovered,
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ModernSkillBadge extends StatelessWidget {
+  final String label;
+  final Color color;
+  final bool isHovered;
+
+  const _ModernSkillBadge({
+    required this.label,
+    required this.color,
+    required this.isHovered,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: isHovered ? color.withOpacity(0.15) : Colors.white.withOpacity(0.03),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: isHovered ? color.withOpacity(0.3) : Colors.white.withOpacity(0.08),
+        ),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: isHovered ? Colors.white : Colors.white.withOpacity(0.7),
+          fontSize: 13,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );

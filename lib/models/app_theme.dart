@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const bgPrimary = Color(0xFF0A0A0F);
-  static const bgCard = Color(0xFF17171F);
-  static const bgCard2 = Color(0xFF1A1A24);
+  static const bgPrimary = Color(0xFF07070C);
+  static const bgCard = Color(0xFF0F0F16);
+  static const bgCard2 = Color(0xFF13131C);
 
   static const purple = Color(0xFFA855F7);
   static const purpleLight = Color(0xFFC084FC);
@@ -11,7 +11,7 @@ class AppColors {
   static const pinkLight = Color(0xFFF472B6);
   static const blue = Color(0xFF3B82F6);
   static const cyan = Color(0xFF06B6D4);
-  static const green = Color(0xFF22C55E);
+  static const green = Color(0xFF10B981);
   static const orange = Color(0xFFF97316);
   static const red = Color(0xFFEF4444);
 
@@ -19,12 +19,31 @@ class AppColors {
   static const textSecondary = Color(0xFF9CA3AF);
   static const textMuted = Color(0xFF6B7280);
 
-  static const borderLight = Color(0x1AFFFFFF);
-  static const borderPurple = Color(0x33A855F7);
-  static const borderPink = Color(0x33EC4899);
+  static const borderLight = Color(0x11FFFFFF);
+  static const borderPurple = Color(0x22A855F7);
+  static const borderPink = Color(0x22EC4899);
+  static const borderBlue = Color(0x223B82F6);
 
   static LinearGradient get purplePinkGradient => const LinearGradient(
         colors: [purple, pink],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
+
+  static LinearGradient get blueCyanGradient => const LinearGradient(
+        colors: [blue, cyan],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
+
+  static LinearGradient get orangeRedGradient => const LinearGradient(
+        colors: [orange, red],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
+
+  static LinearGradient get greenEmeraldGradient => const LinearGradient(
+        colors: [green, Color(0xFF059669)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       );
@@ -34,6 +53,22 @@ class AppColors {
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
       );
+
+  static BoxDecoration glassDecoration({
+    required Color color,
+    double opacity = 0.08,
+    double borderOpacity = 0.15,
+    double radius = 24,
+  }) {
+    return BoxDecoration(
+      color: color.withOpacity(opacity),
+      borderRadius: BorderRadius.circular(radius),
+      border: Border.all(
+        color: color.withOpacity(borderOpacity),
+        width: 1.5,
+      ),
+    );
+  }
 }
 
 class AppSizes {
