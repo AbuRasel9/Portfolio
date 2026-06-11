@@ -84,7 +84,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                 HeroSection(
                   onViewWork: () => _scrollToSection('work'),
                   onDownloadCV: () async {
-                    final Uri uri = Uri.parse('https://github.com/AbuRasel9/Portfolio/raw/main/CV_Abu_Rasel.pdf');
+                    final Uri uri = Uri.parse('https://github.com/AbuRasel9/Portfolio/blob/master/assets/cv/Abu%20Rasel.pdf');
                     if (await canLaunchUrl(uri)) {
                       await launchUrl(uri, mode: LaunchMode.externalApplication);
                     }
