@@ -137,7 +137,7 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
         
         // Bio
         Text(
-          'Architecting high-performance cross-platform experiences.\nTurning visionary concepts into production-ready digital products with Flutter.',
+          'Passionate about crafting high-quality cross-platform applications with Flutter. I specialize in building responsive, scalable, and production-ready products that combine clean code, great performance, and exceptional user experiences',
           textAlign: isMobile ? TextAlign.center : TextAlign.start,
           style: TextStyle(
             color: AppColors.textSecondary,
