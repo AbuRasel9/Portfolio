@@ -20,10 +20,10 @@ class WorkSection extends StatelessWidget {
         subtitle: 'Travel Platform',
         description:
             'A premier flight booking application in Nepal, delivering domestic and international ticket bookings with secure payments.',
-        imageUrl:
-            'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80',
+        imagePath: 'assets/images/flights_nepal_web_logo.png',
+        isAsset: true,
         gradient: const LinearGradient(colors: [AppColors.purple, AppColors.pink]),
-        bgColors: [AppColors.purple.withValues(alpha: 0.08), AppColors.bgCard],
+        bgColors: [AppColors.purple.withOpacity(0.08), AppColors.bgCard],
         tags: ['Flutter', 'Firebase', 'REST API'],
         tagColor: AppColors.purple,
         users: '50K+',
@@ -36,10 +36,10 @@ class WorkSection extends StatelessWidget {
         subtitle: 'Tour Guide',
         description:
             'Complete travel ecosystem with hotel booking interfaces and dynamic travel itinerary planning tools.',
-        imageUrl:
-            'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&q=80',
+        imagePath: 'assets/images/tripper_icon.png',
+        isAsset: true,
         gradient: const LinearGradient(colors: [AppColors.blue, AppColors.cyan]),
-        bgColors: [AppColors.blue.withValues(alpha: 0.08), AppColors.bgCard],
+        bgColors: [AppColors.blue.withOpacity(0.08), AppColors.bgCard],
         tags: ['Flutter', 'Google Maps', 'Dio'],
         tagColor: AppColors.blue,
         users: '10K+',
@@ -52,10 +52,10 @@ class WorkSection extends StatelessWidget {
         subtitle: 'Event Reservation',
         description:
             'High-end ticketing platform facilitating digital seat selection and personalized QR ticket codes.',
-        imageUrl:
-            'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80',
+        imagePath: 'assets/images/buytickets_logo.png',
+        isAsset: true,
         gradient: const LinearGradient(colors: [AppColors.green, Color(0xFF059669)]),
-        bgColors: [AppColors.green.withValues(alpha: 0.08), AppColors.bgCard],
+        bgColors: [AppColors.green.withOpacity(0.08), AppColors.bgCard],
         tags: ['Flutter', 'Provider', 'QR Code'],
         tagColor: AppColors.green,
         users: '8K+',
@@ -67,10 +67,10 @@ class WorkSection extends StatelessWidget {
         subtitle: 'Marketplace',
         description:
             'Full-scale shopping platform featuring search-by-image and secure checkout portals.',
-        imageUrl:
-            'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80',
+        imagePath: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80',
+        isAsset: false,
         gradient: const LinearGradient(colors: [AppColors.orange, AppColors.red]),
-        bgColors: [AppColors.orange.withValues(alpha: 0.08), AppColors.bgCard],
+        bgColors: [AppColors.orange.withOpacity(0.08), AppColors.bgCard],
         tags: ['Flutter', 'GetX', 'Stripe'],
         tagColor: AppColors.orange,
         users: '15K+',
@@ -96,9 +96,9 @@ class WorkSection extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: isMobile ? 1 : (isTablet ? 2 : 3),
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 20,
-              childAspectRatio: isMobile ? 1.1 : (isTablet ? 0.95 : 0.88),
+              crossAxisSpacing: 24,
+              mainAxisSpacing: 24,
+              childAspectRatio: isMobile ? 1.0 : (isTablet ? 0.9 : 0.82),
             ),
             itemCount: projects.length,
             itemBuilder: (ctx, i) => _ProjectCard(project: projects[i]),
@@ -110,7 +110,8 @@ class WorkSection extends StatelessWidget {
 }
 
 class _ProjectData {
-  final String title, subtitle, description, imageUrl;
+  final String title, subtitle, description, imagePath;
+  final bool isAsset;
   final LinearGradient gradient;
   final List<Color> bgColors;
   final List<String> tags;
@@ -123,7 +124,8 @@ class _ProjectData {
     required this.title,
     required this.subtitle,
     required this.description,
-    required this.imageUrl,
+    required this.imagePath,
+    this.isAsset = false,
     required this.gradient,
     required this.bgColors,
     required this.tags,
@@ -152,174 +154,184 @@ class _ProjectCardState extends State<_ProjectCard> {
       onEnter: (_) => setState(() => _hovered = true),
       onExit: (_) => setState(() => _hovered = false),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOutCubic,
-        transform: _hovered ? Matrix4.translationValues(0, -5, 0) : Matrix4.identity(),
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeOutQuart,
+        transform: _hovered ? (Matrix4.identity()..scale(1.02)..translate(0.0, -8.0)) : Matrix4.identity(),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(24),
+          color: AppColors.bgCard,
           border: Border.all(
             color: _hovered
-                ? widget.project.tagColor.withValues(alpha: 0.4)
+                ? widget.project.tagColor.withOpacity(0.5)
                 : AppColors.borderLight,
-            width: 1,
+            width: 1.5,
           ),
           boxShadow: [
             BoxShadow(
               color: _hovered
-                  ? widget.project.tagColor.withValues(alpha: 0.1)
-                  : Colors.black.withValues(alpha: 0.2),
-              blurRadius: _hovered ? 20 : 10,
-              offset: Offset(0, _hovered ? 10 : 5),
+                  ? widget.project.tagColor.withOpacity(0.15)
+                  : Colors.black.withOpacity(0.3),
+              blurRadius: _hovered ? 30 : 15,
+              offset: Offset(0, _hovered ? 15 : 8),
             ),
           ],
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Stack(
+          borderRadius: BorderRadius.circular(24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Background
-              Positioned.fill(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.bgCard.withValues(alpha: 0.7),
-                  ),
-                ),
-              ),
-
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Image
-                  Expanded(
-                    flex: 5,
-                    child: Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        CachedNetworkImage(
-                          imageUrl: widget.project.imageUrl,
-                          fit: BoxFit.cover,
-                          placeholder: (ctx, url) => Container(color: AppColors.bgCard2),
-                          errorWidget: (ctx, url, e) => const Icon(Icons.image_not_supported),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.transparent,
-                                Colors.black.withValues(alpha: 0.6),
-                              ],
-                            ),
+              // Image Section
+              Expanded(
+                flex: 5,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    widget.project.isAsset
+                        ? Image.asset(
+                            widget.project.imagePath,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                color: AppColors.bgCard2,
+                                child: const Center(
+                                  child: Icon(Icons.broken_image, color: Colors.white24, size: 40),
+                                ),
+                              );
+                            },
+                          )
+                        : CachedNetworkImage(
+                            imageUrl: widget.project.imagePath,
+                            fit: BoxFit.cover,
+                            placeholder: (ctx, url) => Container(color: AppColors.bgCard2),
+                            errorWidget: (ctx, url, e) => const Icon(Icons.image_not_supported),
                           ),
+                    // Gradient Overlay
+                    Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.transparent,
+                            Colors.black.withOpacity(0.8),
+                          ],
                         ),
-                        // Positioned(
-                        //   top: 12,
-                        //   left: 12,
-                        //   right: 12,
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //     children: [
-                        //       _StatBadge(
-                        //         icon: Icons.star_rounded,
-                        //         text: widget.project.rating,
-                        //         color: Colors.amber,
-                        //       ),
-                        //       _StatBadge(
-                        //         icon: Icons.group_rounded,
-                        //         text: widget.project.users,
-                        //         color: Colors.white,
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                      ],
+                      ),
                     ),
-                  ),
-
-                  // Content
-                  Expanded(
-                    flex: 6,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    // Stats on top of image
+                    Positioned(
+                      bottom: 12,
+                      left: 12,
+                      right: 12,
+                      child: Row(
                         children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  widget.project.title,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              Icon(
-                                FontAwesomeIcons.arrowUpRightFromSquare,
-                                color: widget.project.tagColor.withValues(alpha: 0.6),
-                                size: 12,
-                              ),
-                            ],
+                          _StatBadge(
+                            icon: Icons.star_rounded,
+                            text: widget.project.rating,
+                            color: Colors.amber,
                           ),
-                          const SizedBox(height: 4),
-                          Text(
-                            widget.project.subtitle,
-                            style: TextStyle(
-                              color: widget.project.tagColor,
-                              fontSize: 11,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Expanded(
-                            child: Text(
-                              widget.project.description,
-                              style: TextStyle(
-                                color: Colors.white.withValues(alpha: 0.6),
-                                fontSize: 11,
-                                height: 1.4,
-                              ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          Wrap(
-                            spacing: 6,
-                            runSpacing: 6,
-                            children: widget.project.tags
-                                .map((t) => _SmallTag(label: t, color: widget.project.tagColor))
-                                .toList(),
-                          ),
-                          const SizedBox(height: 16),
-                          Row(
-                            children: [
-                              if (widget.project.githubUrl != null)
-                                _CompactIconButton(
-                                  icon: FontAwesomeIcons.github,
-                                  onTap: () => _launch(widget.project.githubUrl!),
-                                ),
-                              const SizedBox(width: 8),
-                              if (widget.project.playStoreUrl != null)
-                                Expanded(
-                                  child: _CompactPrimaryButton(
-                                    label: 'Live Demo',
-                                    color: widget.project.tagColor,
-                                    onTap: () => _launch(widget.project.playStoreUrl!),
-                                  ),
-                                ),
-                            ],
+                          const SizedBox(width: 8),
+                          _StatBadge(
+                            icon: Icons.group_rounded,
+                            text: widget.project.users,
+                            color: Colors.white,
                           ),
                         ],
                       ),
                     ),
+                  ],
+                ),
+              ),
+
+              // Content Section
+              Expanded(
+                flex: 6,
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              widget.project.title,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 0.5,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          AnimatedRotation(
+                            duration: const Duration(milliseconds: 300),
+                            turns: _hovered ? 0.125 : 0,
+                            child: Icon(
+                              FontAwesomeIcons.arrowUpRightFromSquare,
+                              color: widget.project.tagColor.withOpacity(0.8),
+                              size: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        widget.project.subtitle.toUpperCase(),
+                        style: TextStyle(
+                          color: widget.project.tagColor,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Expanded(
+                        child: Text(
+                          widget.project.description,
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(0.7),
+                            fontSize: 12,
+                            height: 1.5,
+                          ),
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: widget.project.tags
+                            .map((t) => _SmallTag(label: t, color: widget.project.tagColor))
+                            .toList(),
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          if (widget.project.githubUrl != null)
+                            _CompactIconButton(
+                              icon: FontAwesomeIcons.github,
+                              onTap: () => _launch(widget.project.githubUrl!),
+                            ),
+                          if (widget.project.githubUrl != null) const SizedBox(width: 12),
+                          if (widget.project.playStoreUrl != null)
+                            Expanded(
+                              child: _CompactPrimaryButton(
+                                label: 'View Project',
+                                color: widget.project.tagColor,
+                                onTap: () => _launch(widget.project.playStoreUrl!),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ],
           ),
@@ -345,23 +357,32 @@ class _StatBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha: 0.5),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, color: color, size: 12),
-          const SizedBox(width: 4),
-          Text(
-            text,
-            style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+    return ClipRRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.4),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: Colors.white.withOpacity(0.1)),
           ),
-        ],
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, color: color, size: 12),
+              const SizedBox(width: 4),
+              Text(
+                text,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -376,15 +397,19 @@ class _SmallTag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(6),
-        border: Border.all(color: color.withValues(alpha: 0.2)),
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color.withOpacity(0.2)),
       ),
       child: Text(
         label,
-        style: TextStyle(color: color, fontSize: 9, fontWeight: FontWeight.bold),
+        style: TextStyle(
+          color: color,
+          fontSize: 10,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
@@ -398,16 +423,19 @@ class _CompactIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: AppColors.borderLight),
-          color: Colors.white.withValues(alpha: 0.05),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: AppColors.borderLight),
+            color: Colors.white.withOpacity(0.05),
+          ),
+          child: Icon(icon, color: Colors.white, size: 16),
         ),
-        child: Icon(icon, color: Colors.white, size: 14),
       ),
     );
   }
@@ -422,25 +450,36 @@ class _CompactPrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [color, color.withValues(alpha: 0.8)]),
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: color.withValues(alpha: 0.3),
-              blurRadius: 8,
-              offset: const Offset(0, 4),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [color, color.withOpacity(0.8)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
-          ],
-        ),
-        child: Center(
-          child: Text(
-            label,
-            style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: color.withOpacity(0.3),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Center(
+            child: Text(
+              label,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ),
       ),
