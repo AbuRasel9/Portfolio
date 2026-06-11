@@ -13,33 +13,33 @@ class SkillsSection extends StatelessWidget {
     final padding = AppSizes.responsivePadding(context);
 
     final skillCards = [
-      _SkillData(
+      const _SkillData(
         category: 'Mobile Dev',
         icon: Icons.phone_android_rounded,
-        gradient: const LinearGradient(colors: [Color(0xFF6366F1), Color(0xFFA855F7)]),
-        skills: ['Flutter', 'Dart', 'Android/iOS', 'App Store'],
-        skillColor: const Color(0xFF818CF8),
+        gradient: LinearGradient(colors: [Color(0xFF6366F1), Color(0xFFA855F7)]),
+        skills: ['Flutter', 'Dart', 'Android/iOS', 'App Store',],
+        skillColor: Color(0xFF818CF8),
       ),
-      _SkillData(
-        category: 'State & Logic',
+      const _SkillData(
+        category: 'State Management',
         icon: FontAwesomeIcons.brain,
-        gradient: const LinearGradient(colors: [Color(0xFF3B82F6), Color(0xFF06B6D4)]),
+        gradient: LinearGradient(colors: [Color(0xFF3B82F6), Color(0xFF06B6D4)]),
         skills: ['Riverpod', 'BLoC', 'Provider', 'GetX'],
-        skillColor: const Color(0xFF60A5FA),
+        skillColor: Color(0xFF60A5FA),
       ),
-      _SkillData(
+      const _SkillData(
         category: 'Backend & DB',
         icon: FontAwesomeIcons.server,
-        gradient: const LinearGradient(colors: [Color(0xFF10B981), Color(0xFF3B82F6)]),
-        skills: ['Firebase', 'Supabase', 'Hive', 'PostgreSQL'],
-        skillColor: const Color(0xFF34D399),
+        gradient: LinearGradient(colors: [Color(0xFF10B981), Color(0xFF3B82F6)]),
+        skills: ['Firebase', 'Supabase', 'Hive', ],
+        skillColor: Color(0xFF34D399),
       ),
-      _SkillData(
+      const _SkillData(
         category: 'Tools & Design',
         icon: FontAwesomeIcons.penNib,
-        gradient: const LinearGradient(colors: [Color(0xFFF43F5E), Color(0xFFFB923C)]),
+        gradient: LinearGradient(colors: [Color(0xFFF43F5E), Color(0xFFFB923C)]),
         skills: ['Figma', 'Git', 'CI/CD', 'Adobe XD'],
-        skillColor: const Color(0xFFFB7185),
+        skillColor: Color(0xFFFB7185),
       ),
     ];
 
@@ -48,11 +48,11 @@ class SkillsSection extends StatelessWidget {
       child: Column(
         children: [
           const SectionHeader(
-            badge: '⚡ My Arsenal',
-            title: 'Skills & Tools',
-            subtitle: 'Crafting excellence with the modern tech stack',
+            badge: 'Skills & Tools',
+            // title: 'Skills & Tools',
+            // subtitle: 'Crafting excellence with the modern tech stack',
           ),
-          const SizedBox(height: 80),
+          const SizedBox(height: 20),
           // Unique Layout: Use a custom wrap or grid that looks less "standard"
           LayoutBuilder(builder: (context, constraints) {
             return Wrap(

@@ -80,7 +80,8 @@ class TagChip extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w600),
+        style:
+            TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w600),
       ),
     );
   }
@@ -88,13 +89,13 @@ class TagChip extends StatelessWidget {
 
 class SectionHeader extends StatelessWidget {
   final String badge;
-  final String title;
+  final String? title;
   final String? subtitle;
 
   const SectionHeader({
     super.key,
     required this.badge,
-    required this.title,
+    this.title,
     this.subtitle,
   });
 
@@ -136,23 +137,24 @@ class SectionHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 24),
-        
+
         // Title with dynamic underline
         Stack(
           alignment: Alignment.center,
           children: [
-            GradientText(
-              title,
-              style: TextStyle(
-                fontSize: isMobile ? 32 : 52,
-                fontWeight: FontWeight.w900,
-                letterSpacing: -1,
+            if (title != null)
+              GradientText(
+                title ?? "",
+                style: TextStyle(
+                  fontSize: isMobile ? 32 : 52,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: -1,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
           ],
         ),
-        
+
         if (subtitle != null) ...[
           const SizedBox(height: 16),
           ConstrainedBox(
